@@ -72,13 +72,24 @@
 - use `os.listdir` to read files from directory
 
 ## 11. (Workspace)
-- 
+- create checker labels dict from list of pet images
 
 ## 12. Classifying Images
-- 
+- `classify_images` should create classifier labels and compare them to pets
+    - store the classifier labels in the results returned by `get_pet_labels`
+- `check_images` should be called with parsed args
+    - the arg `dir` and the arg `arch`
+- return a dictionary of lists mapping filenames to label data
+    - list index 0 holds the pet image label
+    - list index 1 holds the classifier label
+    - list index 2 holds the comparison of labels
+- tests should show that:
+    - matches between classifiers and pet image labels are real
+    - non-matches between classifiers and pet labels are real
+    - matches and non-matches together total 40 (of the 40 sample images)
 
 ## 13. (Workspace)
-- 
+- modify `check_images` and especially `classify_images` as outlined
 
 ## 14. Classifying Labels as Dogs
 - 
