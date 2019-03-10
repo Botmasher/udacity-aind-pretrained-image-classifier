@@ -92,31 +92,45 @@
 - modify `check_images` and especially `classify_images` as outlined
 
 ## 14. Classifying Labels as Dogs
-- 
+- code `adjust_results4_isadog`
+- read dog names from text file into a dictionary
+- compare dog names to classifier and pet image labels in `results` dict
+- update `results` with whether or not labels indicate it's a dog
+- `check_images` should run the adjust function passing it the `dogfile` arg
 
 ## 15. (Workspace)
-- 
+- write the adjust method adding label match to indexes 3,4 of each result
 
 ## 16. Calculating Results
-- 
+- build up a dict in `calculates_results_stats` with various percentages
+- percentages evaluate matches and correct classifications versus totals
 
 ## 17. (Workspace)
-- 
+- calculate and return results stats
 
 ## 18. Printing Results
-- 
+- code `print_results`
+- take results and results stats dicts and print summary
+- `results` allows printing of incorrectly classified dogs and breeds
 
 ## 19. (Workspace)
-- 
+- create function to print results
+- run batch shell script to test with all three models
 
 ## 20. Classify Uploaded Images
-- 
+- add images to `uploaded_images` folder
+- run batch shell script to test with all models
+- questions to answer
+    - Not all models classified Dog_01 as the same breed. It's a Kuvasz to alexnet, a Golden Retriever to resnet and a Great Pyrenees to vgg. The dog is, in fact, a cream-colored Golden Retriever.
+    - Not all models saw Dog_01 as the same breed as mirror-image Dog_02. Vgg switched its bid to Golden Retriever. Resnet leaped to Kuvasz. Alexnet now thinks the flipped dog is a Great Pyrenees.
+    - Giraffe and Wheel were reported not-dogs by all but with quite different results. Alexnet guessed a dam and a buckle. Resnet opted for a jaguar/panther and a manhole cover. Vgg saw a llama and a manhole cover.
+    - Based on these limited results, vgg looks like the winner, homing in on good choices even when it's off. Resnet is next, at least in the ballpark for all, while alexnet gave some results worth chuckling at, including a total misclassification of a giraffe. The difference in timing was as limited as the dataset, but I'm curious if resnet will be good enough given the extra time required for vgg.
 
 ## 21. (Workspace)
-- 
+- upload the four images to the folder in the workspace
 
 ## 22. Final Results
-- 
+- compare results to the instructors' classification results
 
 ## 23. (Workspace)
 - 

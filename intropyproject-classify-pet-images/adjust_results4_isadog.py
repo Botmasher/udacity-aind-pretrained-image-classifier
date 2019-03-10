@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 # */AIPND-revision/intropyproject-classify-pet-images/adjust_results4_isadog.py
 #                                                                             
-# PROGRAMMER: 
-# DATE CREATED:                                 
+# PROGRAMMER:   Joshua R
+# DATE CREATED: 09 March 2019                    
 # REVISED DATE: 
 # PURPOSE: Create a function adjust_results4_isadog that adjusts the results 
 #          dictionary to indicate whether or not the pet image label is of-a-dog, 
@@ -66,5 +66,36 @@ def adjust_results4_isadog(results_dic, dogfile):
                maltese) (string - indicates text file's filename)
     Returns:
            None - results_dic is mutable data type so no return needed.
-    """           
-    None
+    """
+    # fill hashmap with dog names from file
+    dog_names = {}
+    with open(dogfile, 'r') as f:
+        for l in f:
+            dogname = l.strip()
+            dog_names.setdefault(dogname, 1)
+    
+    # check and store if image labels named dogs
+    for image_file in results_dic:
+        # whether or not pet labels matched a dog name
+        is_pet_dog = (0,1)[results_dic[image_file][0] in dog_names]
+        # update the match value if previously labeled
+        try:
+            results_dic[image_file][3] = is_pet_dog
+        # add the match value to the end of the list
+        except IndexError:
+            results_dic[image_file].append(is_pet_dog)
+
+        # whether or not comma-separated classifier labels contain one dog name
+        is_classified_dog = 0
+        for classified_name in results_dic[image_file][1].split(","):
+            if classified_name.strip() in dog_names:
+                is_classified_dog = 1
+                break
+        # update the match value if previously classified
+        try:
+            results_dic[image_file][4] = is_classified_dog
+        # add the match value to the end of the list
+        except IndexError:
+            results_dic[image_file].append(is_classified_dog)
+
+    return

@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 # */AIPND-revision/intropyproject-classify-pet-images/print_results.py
 #                                                                             
-# PROGRAMMER: 
-# DATE CREATED:
+# PROGRAMMER:   Joshua R
+# DATE CREATED: 09 March 2019
 # REVISED DATE: 
 # PURPOSE: Create a function print_results that prints the results statistics
 #          from the results statistics dictionary (results_stats_dic). It 
@@ -30,7 +30,7 @@
 #       below by the function definition of the print_results function. 
 #       Notice that this function doesn't to return anything because it  
 #       prints a summary of the results using results_dic and results_stats_dic
-# 
+#
 def print_results(results_dic, results_stats_dic, model, 
                   print_incorrect_dogs = False, print_incorrect_breed = False):
     """
@@ -61,6 +61,31 @@ def print_results(results_dic, results_stats_dic, model,
                               False doesn't print anything(default) (bool) 
     Returns:
            None - simply printing results.
-    """    
-    None
-                
+    """
+    # log overall image count stats
+    print("\n** Classification statistics using model {}".format(model))
+    print("N Images: {}".format(results_stats_dic['n_images']))
+    print("N Dog Images: {}".format(results_stats_dic['n_dogs_img']))
+    print("N Notdog Images: {}".format(results_stats_dic['n_notdogs_img']))
+    
+    # format and log percentage stats
+    for stat_name, stat_value in results_stats_dic.items():
+        if 'pct' in stat_name[:3]:
+            pretty_stat_name = " ".join(stat_name.split("_")).title()
+            print("{}: {}".format(pretty_stat_name, stat_value))
+  
+    # finish printing unless requested dogs or breeds mismatch
+    if not (print_incorrect_breed or print_incorrect_dogs):
+        return
+
+    # log any misclassified dogs or misclassified dog breeds
+    for result in results_dic.values():
+        # misclassified dogs - one dog label does not match the other [...1,0] | [...0,1]
+        if print_incorrect_dogs and result[3] != result[4]:
+            print("Misclassified {} as a {}. It's a {}.".format(result[0], "Notdog" if result[3] else "Dog", "Dog" if result[3] else "Notdog"))
+        # misclassified breeds - both labels agree dog
+        # but pet label is not in the classifier labels [...0,1,1]
+        if print_incorrect_breed and result[2:] == [0,1,1]:
+            print("Misclassified breed {}.".format(result[0]))
+
+    return
